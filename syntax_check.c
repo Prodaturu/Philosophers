@@ -6,9 +6,11 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:41:25 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/04 16:41:28 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/05 00:28:50 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "philosophers.h"
 
 int	ft_atoi(const char *str)
 {
@@ -39,19 +41,17 @@ int	ft_atoi(const char *str)
 
 int	syntax_error(int ac, char **av)
 {
-	int		i;
 	int		num;
 	char	**temp;
 
-	temp = av + 1;
+	temp = av;
 	if (!(ac == 5 || ac == 6))
-		return (printf("ERROR! expected 5 or 6 arguments.\n"), false);
-	while (*temp)
+		return (printf("\033[0;31mERROR! give 5 or 6 args.\n\033[0m"), 1);
+	while (*++temp)
 	{
 		num = ft_atoi(*temp);
 		if (num == 0)
-			return (printf("ERROR! argument can't be zero\n"), false);
-		temp++;
+			return (printf("ERROR! argument can't be zero\n"), 1);
 	}
 	if (ft_atoi(av[1]) < 2)
 		return (printf("Error! Invalid philosopher count RTFM!\n"), 1);
