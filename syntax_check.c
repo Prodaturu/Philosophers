@@ -6,37 +6,33 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:41:25 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/05 00:28:50 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/05 17:13:50 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	ft_atoi(const char *str)
+int	ft_atozu(const char *str)
 {
-	int	res;
-	int	sign;
-	int	i;
+	size_t	res;
+	int		i;
 
 	res = 0;
-	sign = 1;
-	i = -1;
-	if ((str[++i] == 32) || (str[i] >= 9 && str[i] <= 13))
+	i = 0;
+	while ((str[i] == 32) || (str[i] >= 9 && str[i] <= 13))
 		i++;
-	if ((str[i] == '-' || str[i] == '+') && str[i++] == '-')
-		sign = -1;
+	if (str[i] == '-')
+		return (SIZE_MAX);
+	else if (str[i] == '+')
+		i++;
 	while ((str[i] >= '0') && (str[i] <= '9'))
 	{
-		if (res > INT_MAX / 10 || (res == INT_MAX / 10 && str[i]
-				- '0' > INT_MAX % 10))
-		{
-			if (sign == -1)
-				return (INT_MIN);
-			return (INT_MAX);
-		}
+		if (res > SIZE_MAX / 10
+			|| (res == SIZE_MAX / 10 && (str[i] - '0') > SIZE_MAX % 10))
+			return (SIZE_MAX);
 		res = 10 * res + (str[i++] - '0');
 	}
-	return (res * sign);
+	return (res);
 }
 
 int	syntax_error(int ac, char **av)
