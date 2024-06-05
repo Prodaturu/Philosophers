@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:43:23 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/05 17:45:18 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/05 20:37:40 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	init_shared_struct(int ac, char **av, t_shared_data *data)
 	return (1);
 }
 
-int	winit_mutex_data(t_mutex_data *data)
+int	init_mutex_data(t_mutex_data *data)
 {
 	if (FASAK)
 		printf("\033[0;32m-----\t started init_mutex_data -----\n\033[0m");
