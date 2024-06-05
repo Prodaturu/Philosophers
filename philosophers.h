@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 11:24:29 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/05 05:29:13 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/06 00:18:45 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@
 // # define FASAK 0
 
 # define FASAK 1
+
+#define ERROR "\033[0;31m"      // Red
+#define INPUT "\033[0;34m"      // Blue
+#define NORMAL_PRINTS "\033[0;32m" // Green
+#define RESET "\033[0m"         // Reset color
 
 typedef enum e_state {
 	FORKING,
@@ -75,6 +80,6 @@ int					syntax_error(int ac, char **av);
 //: --------- struct_init.c --------- ://
 int					ft_atoi(const char *str);
 int					init_shared_struct(int ac, char **av, t_shared_data *data);
-int					init_mutex_data(t_mutex_data *data);*
+int					init_mutex_data(t_mutex_data *data);
 
 #endif
