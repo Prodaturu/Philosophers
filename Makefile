@@ -6,7 +6,7 @@
 #    By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/05 20:51:45 by sprodatu          #+#    #+#              #
-#    Updated: 2024/06/05 23:11:02 by sprodatu         ###   ########.fr        #
+#    Updated: 2024/06/06 02:50:37 by sprodatu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ CFLAGS = -Wall -Wextra -Werror
 HEADER = philosophers.h
 
 # Source files
-SRCS = main.c struct_init.c syntax_check.c
+SRCS = main.c struct_init.c syntax_check.c time_vals.c
 
 # Object files
 OBJS = $(SRCS:.c=.o)

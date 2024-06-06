@@ -6,13 +6,13 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:41:25 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/05 17:13:50 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:24:14 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	ft_atozu(const char *str)
+size_t	ft_atozu(const char *str)
 {
 	size_t	res;
 	int		i;
@@ -27,37 +27,54 @@ int	ft_atozu(const char *str)
 		i++;
 	while ((str[i] >= '0') && (str[i] <= '9'))
 	{
-		if (res > SIZE_MAX / 10
-			|| (res == SIZE_MAX / 10 && (str[i] - '0') > SIZE_MAX % 10))
+		if (res > SIZE_MAX / 10 || (res == SIZE_MAX / 10
+				&& (unsigned long)(str[i] - '0') > SIZE_MAX % 10))
 			return (SIZE_MAX);
 		res = 10 * res + (str[i++] - '0');
 	}
 	return (res);
 }
 
+int	error_in_arg(int ac, char **av)
+{
+	if (ft_atozu(av[1]) < 2 || ft_atozu(av[1]) > 200)
+		return (printf(ERROR "Error! Invalid philosopher count RTFM!\n"), 1);
+	if (ft_atozu(av[2]) < 60)
+		return (printf(ERROR "Error! Invalid time to die RTFM!\n"), 1);
+	if (ft_atozu(av[3]) < 60)
+		return (printf(ERROR "Error! Invalid time to eat RTFM!\n"), 1);
+	if (ft_atozu(av[4]) < 60)
+		return (printf(ERROR "Error! Invalid time to sleep RTFM!\n"), 1);
+	if (ac == 6 && ft_atozu(av[5]) < 0)
+		return (printf(ERROR "Error! Invalid eat count RTFM!\n"), 1);
+	return (0);
+}
+
 int	syntax_error(int ac, char **av)
 {
 	int		num;
+	char	*arg;
 	char	**temp;
 
+	if (ac != 5 && ac != 6)
+		return (printf(ERROR "ERROR! Provide 5 or 6 arguments.\n" RESET), 1);
 	temp = av;
-	if (!(ac == 5 || ac == 6))
-		return (printf("\033[0;31mERROR! give 5 or 6 args.\n\033[0m"), 1);
 	while (*++temp)
 	{
-		num = ft_atoi(*temp);
-		if (num == 0)
-			return (printf("ERROR! argument can't be zero\n"), 1);
+		arg = *temp;
+		if (!*arg)
+			return (printf(ERROR "ERROR! Argument can't be empty.\n" RESET), 1);
+		while (*arg)
+		{
+			if (*arg < '0' || *arg > '9')
+				return (printf(ERROR "ERROR! Numeric args needed.\n" RESET), 1);
+			arg++;
+		}
+		num = ft_atozu(*temp);
+		if (num == 0 || num == SIZE_MAX)
+			return (printf(ERROR "ERROR! Argument overflow.\n" RESET), 1);
 	}
-	if (ft_atoi(av[1]) < 2)
-		return (printf("Error! Invalid philosopher count RTFM!\n"), 1);
-	if (ft_atoi(av[2]) < 60)
-		return (printf("Error! Invalid time to die RTFM!\n"), 1);
-	if (ft_atoi(av[3]) < 60)
-		return (printf("Error! Invalid time to eat RTFM!\n"), 1);
-	if (ft_atoi(av[4]) < 60)
-		return (printf("Error! Invalid time to sleep RTFM!\n"), 1);
-	if (ac == 6 && ft_atoi(av[5]) < 0)
-		return (printf("Error! Invalid eat count RTFM!\n"), 1);
-	return (printf("No syntax errors found\n"), 0);
+	if (!error_in_arg(ac, av) && FASAK)
+		printf(OUTPUT "-----\t No syntax errors found -----\n" RESET);
+	return (0);
 }
