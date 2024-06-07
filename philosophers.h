@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 11:24:29 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/07 16:59:30 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/07 19:09:23 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,14 @@ typedef struct s_philo_data {
 }	t_philo;
 
 //: ---------	syntax_check.c	--------- ://
+size_t				ft_atozu(const char *str);
+int					error_in_arg(int ac, char **av);
 int					syntax_error(int ac, char **av);
 
 //: ---------	struct_init.c	--------- ://
-size_t				ft_atozu(const char *str);
 int					init_shared_struct(int ac, char **av, t_shared *data);
 int					init_mutex(t_mutex *data);
+void				cleanup_philo(t_philo **philos, int id);
 int					init_philo(t_philo **philos, t_shared *shared, \
 t_mutex *mutexes);
 

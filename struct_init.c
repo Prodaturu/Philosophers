@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:43:23 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/07 17:00:39 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/07 19:08:26 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,6 @@ int	init_mutex(t_mutex *data)
  * @param shared
  * 
 */
-
-// TODO: Check for potential memory leaks if init_philo failed after
-// mallocing philos.
-// TODO: Consider using calloc instead of malloc to initialize the
-// philos array to 0.
-// TODO: Consider using a for loop instead of while loop in init_philo.
-// TODO: Check if there's a need to destroy the mutexes if init_philo fails.
 
 void	init_single_philo(t_philo *philo, int id, t_shared *shared, \
 	t_mutex *mutexes)
