@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:41:25 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/06 17:24:14 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/07 17:01:14 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ int	error_in_arg(int ac, char **av)
 
 int	syntax_error(int ac, char **av)
 {
-	int		num;
-	char	*arg;
-	char	**temp;
+	size_t		num;
+	char		*arg;
+	char		**temp;
 
 	if (ac != 5 && ac != 6)
 		return (printf(ERROR "ERROR! Provide 5 or 6 arguments.\n" RESET), 1);

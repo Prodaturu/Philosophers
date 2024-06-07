@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 11:24:29 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/06 17:28:53 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/07 16:59:30 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ typedef struct s_philo_data {
 	int				meal_done_count;
 	int				last_meal_time;
 	int				is_done;
-	t_shared	*shared;
-	t_mutex	*mutexes;
+	t_shared		*shared;
+	t_mutex			*mutexes;
 	pthread_mutex_t	r_fork;
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	lock_eating;
@@ -82,6 +82,8 @@ int					syntax_error(int ac, char **av);
 size_t				ft_atozu(const char *str);
 int					init_shared_struct(int ac, char **av, t_shared *data);
 int					init_mutex(t_mutex *data);
+int					init_philo(t_philo **philos, t_shared *shared, \
+t_mutex *mutexes);
 
 //: ---------	time_vals.c	--------- ://
 size_t				get_curr_time(void);

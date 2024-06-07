@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 23:09:10 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/06 17:30:27 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/07 17:43:00 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	main(int ac, char **av)
 	if (!init_mutex(&mutexes))
 		return (1);
 	if (init_philo(&philos, &shared, &mutexes))
+		return (1);
+	if (!start_threads(&shared, &mutexes, philos))
 		return (1);
 	return (0);
 }

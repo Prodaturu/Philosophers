@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:43:23 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/06 19:20:10 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/07 17:00:39 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,35 +78,6 @@ int	init_mutex(t_mutex *data)
  * 
 */
 
-// int	init_philo(t_philo **philos, t_shared *shared, t_mutex *mutexes)
-{
-	int		id;
-
-	id = -1;
-	*philos = malloc(sizeof(t_philo) * shared->philo_count);
-	if (!*philos)
-		return (printf(ERROR "malloc fail for philos\n" RESET), 0);
-	while (++id < shared->philo_count)
-	{
-		(*philos)[id].id = id + 1;
-		(*philos)[id].death_time = shared->time_to_die;
-		(*philos)[id].meal_done_count = 0;
-		(*philos)[id].last_meal_time = shared->start_time;
-		(*philos)[id].is_done = 0;
-		(*philos)[id].shared = shared;
-		(*philos)[id].mutexes = mutexes;
-		if (pthread_mutex_init(&(*philos)[id].r_fork, NULL) != 0)
-			return (printf(ERROR "pthread_mutex_init for r_fork failed\n" RESET), 0);
-		if (pthread_mutex_init(&(*philos)[id].lock_eating, NULL) != 0)
-			return (pthread_mutex_destroy(&(*philos)[id].r_fork),
-					printf(ERROR "pthread_mutex_init for lock_eating failed\n" RESET), 0);
-		if (id > 0)
-			(*philos)[id].l_fork = &(*philos)[id - 1].r_fork;
-	}
-	(*philos)[0].l_fork = &(*philos)[shared->philo_count - 1].r_fork;
-	return (1);
-}
-
 // TODO: Check for potential memory leaks if init_philo failed after
 // mallocing philos.
 // TODO: Consider using calloc instead of malloc to initialize the
@@ -114,7 +85,19 @@ int	init_mutex(t_mutex *data)
 // TODO: Consider using a for loop instead of while loop in init_philo.
 // TODO: Check if there's a need to destroy the mutexes if init_philo fails.
 
-void cleanup_philo(t_philo **philos, int id)
+void	init_single_philo(t_philo *philo, int id, t_shared *shared, \
+	t_mutex *mutexes)
+{
+	philo->id = id + 1;
+	philo->death_time = shared->time_to_die;
+	philo->meal_done_count = 0;
+	philo->last_meal_time = shared->start_time;
+	philo->is_done = 0;
+	philo->shared = shared;
+	philo->mutexes = mutexes;
+}
+
+void	cleanup_philo(t_philo **philos, int id)
 {
 	while (id > 0)
 	{
@@ -135,19 +118,14 @@ int	init_philo(t_philo **philos, t_shared *shared, t_mutex *mutexes)
 	id = -1;
 	while (++id < shared->philo_count)
 	{
-		(*philos)[id].id = id + 1;
-		(*philos)[id].death_time = shared->time_to_die;
-		(*philos)[id].meal_done_count = 0;
-		(*philos)[id].last_meal_time = shared->start_time;
-		(*philos)[id].is_done = 0;
-		(*philos)[id].shared = shared;
-		(*philos)[id].mutexes = mutexes;
+		init_single_philo(&(*philos)[id], id, shared, mutexes);
 		if (pthread_mutex_init(&(*philos)[id].r_fork, NULL) != 0)
 			return (cleanup_philo(philos, id),
 				printf(ERROR "r_fork pthread_mutex_init fail\n"), 0);
 		if (pthread_mutex_init(&(*philos)[id].lock_eating, NULL) != 0)
 			return (pthread_mutex_destroy(&(*philos)[id].r_fork),
-			cleanup_philo(philos, id), printf(ERROR "lock_eating pthread_mutex_init fail\n"), 0);
+				cleanup_philo(philos, id),
+				printf(ERROR "lock_eating pthread_mutex_init fail\n"), 0);
 		if (id > 0)
 			(*philos)[id].l_fork = &(*philos)[id - 1].r_fork;
 	}
