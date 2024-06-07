@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:41:25 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/07 17:01:14 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/07 21:06:37 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,6 @@ int	syntax_error(int ac, char **av)
 			return (printf(ERROR "ERROR! Argument overflow.\n" RESET), 1);
 	}
 	if (!error_in_arg(ac, av) && FASAK)
-		printf(OUTPUT "-----\t No syntax errors found -----\n" RESET);
+		printf(OUTPUT "\n-----\t No syntax errors found -----\n\n" RESET);
 	return (0);
 }

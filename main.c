@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 23:09:10 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/07 19:05:12 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/07 21:02:33 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ int	main(int ac, char **av)
 		return (1);
 	if (init_philo(&philos, &shared, &mutexes))
 		return (1);
-	// if (!start_threads(&shared, &mutexes, philos))
-	// 	return (1);
+	if (!start_threads(philos))
+		return (printf(ERROR "start_threads failed\n"), 1);
 	return (0);
 }
 

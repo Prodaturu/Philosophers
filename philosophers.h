@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 11:24:29 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/07 19:09:23 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/07 21:15:12 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@
 // FASAK is used to test / debug code,
 // FASAK -> 1 => test mode
 // FASAK -> 0 => normal mode
-// # define FASAK 0
+// # define FASAK 1
 
-# define FASAK 1
+# define FASAK 0
 
 # define ERROR "\033[0;31m"		// Red
 # define DEBUG "\033[0;34m"		// Blue
@@ -83,11 +83,17 @@ int					syntax_error(int ac, char **av);
 //: ---------	struct_init.c	--------- ://
 int					init_shared_struct(int ac, char **av, t_shared *data);
 int					init_mutex(t_mutex *data);
-void				cleanup_philo(t_philo **philos, int id);
 int					init_philo(t_philo **philos, t_shared *shared, \
 t_mutex *mutexes);
+int					start_threads(t_philo *philos);
 
 //: ---------	time_vals.c	--------- ://
 size_t				get_curr_time(void);
+
+//: ---------	cleaners.c	--------- ://
+void				cleanup_philo(t_philo **philos, int id);
+
+//: ---------	routine.c	--------- ://
+void				*philo_routine(void *arg);
 
 #endif

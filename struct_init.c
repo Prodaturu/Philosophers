@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:43:23 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/07 19:08:26 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/07 21:10:34 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 int	init_shared_struct(int ac, char **av, t_shared *data)
 {
 	if (FASAK)
-		printf("\033[0;32m-----\t started init_shared_struct -----\n\033[0m");
+		printf(OUTPUT "----- \t started init_shared_struct \t-----\n");
 	data->philo_count = ft_atozu(av[1]);
 	data->time_to_die = ft_atozu(av[2]);
 	data->time_to_eat = ft_atozu(av[3]);
@@ -39,7 +39,7 @@ int	init_shared_struct(int ac, char **av, t_shared *data)
 		data->min_meals = ft_atozu(av[5]);
 	data->start_time = get_curr_time();
 	if (FASAK)
-		printf("\033[0;32m-----\t Ended init_shared_struct -----\n\033[0m");
+		printf(OUTPUT "-----\t Ended init_shared_struct \t-----\n\n");
 	return (1);
 }
 
@@ -57,7 +57,7 @@ int	init_shared_struct(int ac, char **av, t_shared *data)
 int	init_mutex(t_mutex *data)
 {
 	if (FASAK)
-		printf(DEBUG "-----\t started init_mutex -----\n");
+		printf(OUTPUT "-----\t started init_mutex \t-----\n");
 	if (pthread_mutex_init(&data->lock_dead, NULL) != 0)
 		return (printf(ERROR "pthread_mutex_init for lock_dead failed.\n"), 0);
 	if (pthread_mutex_init(&data->lock_done, NULL) != 0)
@@ -68,7 +68,7 @@ int	init_mutex(t_mutex *data)
 			pthread_mutex_destroy(&data->lock_done),
 			printf(ERROR "pthread_mutex_init for lock_print failed.\n"), 0);
 	if (FASAK)
-		printf(DEBUG "-----\t Ended init_mutex -----\n");
+		printf(OUTPUT "-----\t Ended init_mutex \t-----\n\n");
 	return (1);
 }
 
@@ -90,21 +90,12 @@ void	init_single_philo(t_philo *philo, int id, t_shared *shared, \
 	philo->mutexes = mutexes;
 }
 
-void	cleanup_philo(t_philo **philos, int id)
-{
-	while (id > 0)
-	{
-		id--;
-		pthread_mutex_destroy(&(*philos)[id].r_fork);
-		pthread_mutex_destroy(&(*philos)[id].lock_eating);
-	}
-	free(*philos);
-}
-
 int	init_philo(t_philo **philos, t_shared *shared, t_mutex *mutexes)
 {
 	int		id;
 
+	if (FASAK)
+		printf(OUTPUT "-----\t started init_philo \t-----\n");
 	*philos = malloc(sizeof(t_philo) * shared->philo_count);
 	if (!*philos)
 		return (printf(ERROR "malloc fail for philos\n" RESET), 0);
@@ -123,5 +114,32 @@ int	init_philo(t_philo **philos, t_shared *shared, t_mutex *mutexes)
 			(*philos)[id].l_fork = &(*philos)[id - 1].r_fork;
 	}
 	(*philos)[0].l_fork = &(*philos)[shared->philo_count - 1].r_fork;
+	if (FASAK)
+		printf(OUTPUT "-----\t Ended init_philo \t-----\n\n");
+	return (0);
+}
+
+int	start_threads(t_philo *philos)
+{
+	int		id;
+
+	if (FASAK)
+		printf(OUTPUT "-----\t Started start_threads fn -----\n" RESET);
+	id = 0;
+	while (id < philos[0].shared->philo_count)
+	{
+		if (pthread_create(&philos[id].thread, NULL, philo_routine, \
+			&philos[id]) != 0)
+			return (printf(ERROR "ERROR! pthread_create failed\n"), 0);
+		id++;
+	}
+	if (FASAK)
+		printf(OUTPUT "-----\t Created all threads -----\n\n-----\t \
+		Joining threads -----\n" RESET);
+	id = -1;
+	while (++id < philos[0].shared->philo_count)
+		pthread_join(philos[id].thread, NULL);
+	if (FASAK)
+		printf(OUTPUT "-----\t Ended start_threads fn -----\n" RESET);
 	return (1);
 }
