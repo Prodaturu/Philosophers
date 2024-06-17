@@ -6,11 +6,43 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 01:04:32 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/18 01:05:28 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/18 01:27:49 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+void	print_action(t_philo *philo, const char *action)
+{
+	size_t	timestamp;
+
+	pthread_mutex_lock(&philo->mutexes->lock_print);
+	if (philo->shared->is_dead)
+	{
+		pthread_mutex_unlock(&philo->mutexes->lock_print);
+		return ;
+	}
+	timestamp = get_curr_time() - philo->shared->start_time;
+	printf("%zu %d %s\n", timestamp, philo->id, action);
+	pthread_mutex_unlock(&philo->mutexes->lock_print);
+}
+
+void	ft_usleep(int time)
+{
+	size_t	start;
+	size_t	now;
+	size_t	end;
+
+	start = get_curr_time();
+	end = start + time;
+	while (1)
+	{
+		now = get_curr_time();
+		if (now >= end)
+			break ;
+		usleep(500);
+	}
+}
 
 void	*is_full(void *philos)
 {
