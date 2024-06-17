@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 11:24:29 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/17 05:19:19 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/18 01:08:22 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,4 +104,7 @@ void				cleanup_philo(t_philo **philos, int id);
 //: ---------	routine.c	--------- ://
 void				*philo_routine(void *arg);
 
+//: ---------	is_checks.c	--------- ://
+void				*is_dead(void *philos);
+void				*is_full(void *philos);
 #endif
