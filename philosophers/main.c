@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 22:08:03 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/14 08:15:03 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/17 05:58:12 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,19 @@
 int	main(int argc, char **argv)
 {
 	t_shared	shared;
+	t_philo		*philos;
 
+	if (FASAK)
+		printf(OUTPUT "-----\t started main fn\t-----\n" RESET);
 	if (syntax_error(argc, argv))
 		return (1);
 	if (init_shared(&shared, argc, argv))
 		return (1);
-	if (init_philos())
+	if (init_philos(&shared, &philos))
 		return (1);
-	if (start_threads(&shared))
+	if (start_threads(&shared, philos))
 		return (1);
-	cleanup(&shared);
+	if (FASAK)
+		printf(OUTPUT "-----\t finished main fn\t-----\n" RESET);
 	return (0);
 }

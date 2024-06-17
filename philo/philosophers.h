@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 11:24:29 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/13 21:20:09 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/17 05:19:19 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,14 @@ typedef enum e_state
 	THINKING,
 	DEAD_AF
 }			t_state;
+// JaggyJazz123@
 
 // Data common to all philosophers
 
 typedef struct s_shared_data
 {
 	int				is_dead;
+	int				is_full;
 	int				philo_count;
 	size_t			time_to_die;
 	size_t			time_to_eat;
@@ -57,19 +59,28 @@ typedef struct s_shared_data
 	size_t			start_time;
 }				t_shared;
 
+// Mutexes and synchronization data
+typedef struct s_mutex_data {
+	pthread_mutex_t	lock_dead;
+	pthread_mutex_t	lock_done;
+	pthread_mutex_t	lock_print;
+}				t_mutex;
+
 // Data specific to each philosopher
 
 typedef struct s_philo_data
 {
 	pthread_t		thread;
 	int				id;
-	size_t			time_of_death;
+	size_t			death_time;
+	size_t			last_meal_time;
 	int				meal_count;
-	int				done;
+	int				is_done;
 	t_shared		*shared;
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	r_fork;
-	pthread_mutex_t	eat_lock ;
+	pthread_mutex_t	lock_eating;
+	t_mutex			*mutexes;
 }	t_philo;
 
 //: ---------	syntax_check.c	--------- ://
