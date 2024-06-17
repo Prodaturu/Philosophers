@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:43:23 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/17 06:00:10 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/18 00:40:54 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,11 +160,11 @@ void	*is_dead(void *philos)
 		{
 			pthread_mutex_lock(&philo[i].mutexes->lock_print);
 			philo[i].shared->is_dead = 1;
-			printf("%lu %d died\n", time - philo[i].shared->start_time, philo[i].id);
+			printf("%lu %d died\n", time - philo[i].shared->start_time,\
+				philo[i].id);
 			usleep(10);
 			pthread_mutex_unlock(&philo[i].mutexes->lock_print);
-			pthread_mutex_unlock(&philo[i].mutexes->lock_dead);
-			return NULL;
+			return (pthread_mutex_unlock(&philo[i].mutexes->lock_dead), NULL);
 		}
 		pthread_mutex_unlock(&philo[i].mutexes->lock_dead);
 		if (i == philo->shared->philo_count - 1)
