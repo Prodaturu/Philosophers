@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 20:50:08 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/18 01:30:29 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/18 03:27:57 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,44 +64,6 @@ void	*philo_main_routine(t_philo *philo)
 	return (NULL);
 }
 
-// void	*philo_main_routine(t_philo *philo)
-// {
-// 	while (!philo->shared->is_dead)
-// 	{
-// 		if (philo->shared->is_dead || philo->shared->is_full)
-// 			return NULL;
-
-// 		pthread_mutex_lock(&philo->r_fork);
-// 		print_action(philo, "has taken a fork");
-// 		pthread_mutex_lock(philo->l_fork);
-// 		print_action(philo, "has taken a fork");
-// 		pthread_mutex_lock(&philo->lock_eating);
-// 		print_action(philo, "is eating");
-
-// 		philo->last_meal_time = get_curr_time();
-// 		philo->meal_count++;
-// 		if (philo->meal_count == (int)philo->shared->min_meals)
-// 			philo->is_done = 1;
-
-// 		ft_usleep(philo->shared->time_to_eat);
-// 		pthread_mutex_unlock(&philo->lock_eating);
-// 		pthread_mutex_unlock(philo->l_fork);
-// 		pthread_mutex_unlock(&philo->r_fork);
-
-// 		if (philo->shared->is_dead || philo->shared->is_full)
-// 			return NULL;
-
-// 		print_action(philo, "is sleeping");
-// 		ft_usleep(philo->shared->time_to_sleep);
-
-// 		if (philo->shared->is_dead || philo->shared->is_full)
-// 			return NULL;
-
-// 		print_action(philo, "is thinking");
-// 	}
-// 	return NULL;
-// }
-
 void	*philo_routine(void *arg)
 {
 	t_philo	*philo;
@@ -110,6 +72,44 @@ void	*philo_routine(void *arg)
 	philo_initial_setup(philo);
 	return (philo_main_routine(philo));
 }
+
+// // void	*philo_main_routine(t_philo *philo)
+// // {
+// // 	while (!philo->shared->is_dead)
+// // 	{
+// // 		if (philo->shared->is_dead || philo->shared->is_full)
+// // 			return NULL;
+
+// // 		pthread_mutex_lock(&philo->r_fork);
+// // 		print_action(philo, "has taken a fork");
+// // 		pthread_mutex_lock(philo->l_fork);
+// // 		print_action(philo, "has taken a fork");
+// // 		pthread_mutex_lock(&philo->lock_eating);
+// // 		print_action(philo, "is eating");
+
+// // 		philo->last_meal_time = get_curr_time();
+// // 		philo->meal_count++;
+// // 		if (philo->meal_count == (int)philo->shared->min_meals)
+// // 			philo->is_done = 1;
+
+// // 		ft_usleep(philo->shared->time_to_eat);
+// // 		pthread_mutex_unlock(&philo->lock_eating);
+// // 		pthread_mutex_unlock(philo->l_fork);
+// // 		pthread_mutex_unlock(&philo->r_fork);
+
+// // 		if (philo->shared->is_dead || philo->shared->is_full)
+// // 			return NULL;
+
+// // 		print_action(philo, "is sleeping");
+// // 		ft_usleep(philo->shared->time_to_sleep);
+
+// // 		if (philo->shared->is_dead || philo->shared->is_full)
+// // 			return NULL;
+
+// // 		print_action(philo, "is thinking");
+// // 	}
+// // 	return NULL;
+// // }
 
 // void	*philo_routine(void *arg)
 // {
@@ -139,14 +139,10 @@ void	*philo_routine(void *arg)
 // 		pthread_mutex_unlock(&philo->lock_eating);
 // 		pthread_mutex_unlock(philo->l_fork);
 // 		pthread_mutex_unlock(&philo->r_fork);
-
 // 		if (philo->shared->is_dead || philo->shared->is_full)
 // 			return (NULL);
-// 		pthread_mutex_lock(&philo->mutexes->lock_dead);
-// 		pthread_mutex_unlock(&philo->mutexes->lock_dead);
 // 		print_action(philo, "is sleeping");
 // 		ft_usleep(philo->shared->time_to_sleep);
-
 // 		if (philo->shared->is_dead || philo->shared->is_full)
 // 			return (NULL);
 // 		print_action(philo, "is thinking");
