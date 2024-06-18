@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 01:04:32 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/18 03:32:38 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/18 08:59:06 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,41 +69,38 @@ void	*is_full(void *philos)
 	return (NULL);
 }
 
-int	check_philo_dead(t_philo *philo)
+void	mark_philo_as_dead(t_philo *philo, size_t time)
 {
-	size_t	time;
-
-	pthread_mutex_lock(&philo->mutexes->lock_dead);
-	time = get_curr_time();
-	if (philo->death_time <= time - philo->last_meal_time)
-	{
-		pthread_mutex_lock(&philo->mutexes->lock_print);
-		philo->shared->is_dead = 1;
-		printf("%lu %d died\n", time - philo->shared->start_time, philo->id);
-		usleep(10);
-		pthread_mutex_unlock(&philo->mutexes->lock_print);
-		pthread_mutex_unlock(&philo->mutexes->lock_dead);
-		return (1);
-	}
+	pthread_mutex_lock(&philo->mutexes->lock_print);
+	philo->shared->is_dead = 1;
+	printf("%lu %d died\n", time - philo->shared->start_time, philo->id);
+	usleep(10);
+	pthread_mutex_unlock(&philo->mutexes->lock_print);
 	pthread_mutex_unlock(&philo->mutexes->lock_dead);
-	return (0);
 }
 
 void	*is_dead(void *philos)
 {
-	t_philo		*philo;
-	int			i;
+	t_philo *philo;
+	size_t time;
+	int i;
 
-	philo = (t_philo *)philos;
+	philo = philos;
 	i = -1;
-	while (1)
+	while (++i < philo->shared->philo_count)
 	{
-		if (check_philo_dead(&philo[i]))
+		pthread_mutex_lock(&philo[i].mutexes->lock_dead);
+		time = get_curr_time();
+		if (philo[i].death_time <= time - philo[i].last_meal_time)
+		{
+			mark_philo_as_dead(&philo[i], time);
 			return (NULL);
+		}
+		pthread_mutex_unlock(&philo[i].mutexes->lock_dead);
 		if (philo->shared->is_full == 1)
 			return (NULL);
-		if (++i >= philo->shared->philo_count)
-			i = 0;
+		if (i == philo->shared->philo_count - 1)
+			i = -1;
 	}
 	return (NULL);
 }
