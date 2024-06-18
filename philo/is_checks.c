@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 01:04:32 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/18 08:59:06 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/18 09:03:36 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ void	mark_philo_as_dead(t_philo *philo, size_t time)
 
 void	*is_dead(void *philos)
 {
-	t_philo *philo;
-	size_t time;
-	int i;
+	t_philo	*philo;
+	size_t	time;
+	int		i;
 
 	philo = philos;
 	i = -1;
