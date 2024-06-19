@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:43:23 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/18 01:04:20 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/19 21:01:08 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,8 @@ int	init_philo(t_philo **philos, t_shared *shared, t_mutex *mutexes)
 		if (id > 0)
 			(*philos)[id].l_fork = &(*philos)[id - 1].r_fork;
 	}
-	(*philos)[0].l_fork = &(*philos)[shared->philo_count - 1].r_fork;
+	if (shared->philo_count > 1)
+		(*philos)[0].l_fork = &(*philos)[shared->philo_count - 1].r_fork;
 	if (FASAK)
 		printf(OUTPUT "-----\t Ended init_philo \t-----\n\n");
 	return (0);

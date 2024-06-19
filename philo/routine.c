@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 20:50:08 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/18 03:27:57 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/19 22:41:57 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,12 @@ void	*philo_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	if (philo->shared->philo_count == 1)
+	{
+		print_action(philo, "has taken a fork");
+		ft_usleep(philo->shared->time_to_eat);
+		return (NULL);
+	}
 	philo_initial_setup(philo);
 	return (philo_main_routine(philo));
 }

@@ -6,8 +6,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/sprodatu/42projects/philosophers",
-      "program": "/Users/sprodatu/42projects/philosophers/build/Debug/outDebug"
+      "cwd": "/Users/sprodatu/42projects/philosophers/philo",
+      "program": "/Users/sprodatu/42projects/philosophers/philo/build/Debug/outDebug"
     }
   ]
 }
