@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:41:25 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/20 01:40:45 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/20 04:30:00 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int	syntax_error(int ac, char **av)
 	if (error_in_arg(ac, av))
 		return (1);
 	if (DEBUG_SWITCH)
-		printf(OUTPUT "\n-----\t No syntax errors found -----\n\n" RESET);
+		printf(OUTPUT "\n-----\t No syntax errors found ----- \n\n" RESET);
 	return (0);
 }
 
