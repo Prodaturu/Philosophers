@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 11:24:29 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/19 21:30:11 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/20 00:07:30 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,30 @@
 # include <unistd.h>
 # include <sys/time.h>
 
-// FASAK is used to test / debug code,
-// FASAK -> 1 => test mode
-// FASAK -> 0 => normal mode
-// # define FASAK 1
+// DEBUG_SWITCH is used to test / debug code,
+// DEBUG_SWITCH -> 1 => test mode
+// DEBUG_SWITCH -> 0 => normal mode
+// # define DEBUG_SWITCH 1
 
-# define FASAK 0
+# define DEBUG_SWITCH 1
 
 # define ERROR "\033[0;31m"		// Red
 # define DEBUG "\033[0;34m"		// Blue
 # define OUTPUT "\033[0;32m"	// Green
+// # define EAT "\033[38;2;36;113;163m"   // #2471A3
+// # define FORK "\033[38;2;169;50;38m"   // #A93226
+// # define SLEEP "\033[38;2;112;123;124m" // #707B7C
+// # define THINK "\033[38;2;211;84;0m"   // #D35400
+# define FORK "\033[38;2;52;152;219m"    // #3498DB
+// # define FORK "\033[38;2;231;76;60m"    // #E74C3C
+// # define SLEEP "\033[38;2;149;165;166m" // #95A5A6
+// # define THINK "\033[38;2;241;196;15m"  // #F1C40F
+// # define EAT "\033[38;2;231;76;60m"   // #E74C3C
+# define EAT "\033[0;32m"
+# define SLEEP "\033[38;2;189;195;199m"// #BDC3C7
+# define THINK "\033[38;2;241;196;15m" // #F1C40F
 # define RESET "\033[0m"		// Reset color
+
 
 typedef enum e_state
 {
@@ -100,6 +113,8 @@ size_t				get_curr_time(void);
 
 //: ---------	cleaners.c	--------- ://
 void				cleanup_philo(t_philo **philos, int id);
+int					ft_strcmp(const char *s1, const char *s2);
+
 
 //: ---------	routine.c	--------- ://
 void				*philo_routine(void *arg);

@@ -6,26 +6,63 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 01:04:32 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/18 09:03:36 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/20 01:44:02 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	print_action(t_philo *philo, const char *action)
+void print_action(t_philo *philo, const char *action)
 {
-	size_t	timestamp;
+    size_t timestamp;
+    const char *color;
 
-	pthread_mutex_lock(&philo->mutexes->lock_print);
-	if (philo->shared->is_dead)
+    // Determine the color based on the action
+	// we use ft_strcmp to compare the strings
+	// if the strings are equal, we set the color to the corresponding color
+    if (ft_strcmp(action, "is thinking") == 0)
+        color = THINK;
+    else if (ft_strcmp(action, "has taken a fork") == 0)
+        color = FORK;
+    else if (ft_strcmp(action, "is eating") == 0)
+        color = EAT;
+    else if (ft_strcmp(action, "is sleeping") == 0)
+        color = SLEEP;
+    else
+        color = RESET;
+
+	// As the 
+    pthread_mutex_lock(&philo->mutexes->lock_print);
+    if (philo->shared->is_dead)
 	{
-		pthread_mutex_unlock(&philo->mutexes->lock_print);
-		return ;
-	}
-	timestamp = get_curr_time() - philo->shared->start_time;
-	printf("%zu %d %s\n", timestamp, philo->id, action);
-	pthread_mutex_unlock(&philo->mutexes->lock_print);
+        pthread_mutex_unlock(&philo->mutexes->lock_print);
+        return;
+    }
+
+    timestamp = get_curr_time() - philo->shared->start_time;
+    
+    // Print the formatted message with color
+    printf("%s%zu %d %s%s\n", color, timestamp, philo->id, action, RESET);
+
+    pthread_mutex_unlock(&philo->mutexes->lock_print);
 }
+
+// Use this if u have norm contraints
+
+// void	print_action(t_philo *philo, const char *action)
+// {
+// 	size_t	timestamp;
+
+// 	pthread_mutex_lock(&philo->mutexes->lock_print);
+// 	if (philo->shared->is_dead)
+// 	{
+// 		pthread_mutex_unlock(&philo->mutexes->lock_print);
+// 		return ;
+// 	}
+// 	timestamp = get_curr_time() - philo->shared->start_time;
+// 	printf("%zu %d %s\n", timestamp, philo->id, action);
+// 	pthread_mutex_unlock(&philo->mutexes->lock_print);
+// }
 
 void	ft_usleep(int time)
 {
@@ -73,7 +110,7 @@ void	mark_philo_as_dead(t_philo *philo, size_t time)
 {
 	pthread_mutex_lock(&philo->mutexes->lock_print);
 	philo->shared->is_dead = 1;
-	printf("%lu %d died\n", time - philo->shared->start_time, philo->id);
+	printf(ERROR "%lu %d died\n" RESET, time - philo->shared->start_time, philo->id);
 	usleep(10);
 	pthread_mutex_unlock(&philo->mutexes->lock_print);
 	pthread_mutex_unlock(&philo->mutexes->lock_dead);

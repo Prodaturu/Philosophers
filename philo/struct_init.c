@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:43:23 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/19 21:01:08 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/19 23:23:06 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@
  * @details Init and fill struct with data from argv
  * Note: if min_meals not given it's -1
  * Note: start_time is set to current time
- * Note: FASAK is used for debugging
+ * Note: DEBUG_SWITCH is used for debugging
 */
 
 int	init_shared_struct(int ac, char **av, t_shared *data)
 {
-	if (FASAK)
+	if (DEBUG_SWITCH)
 		printf(OUTPUT "----- \t started init_shared_struct \t-----\n");
 	data->philo_count = ft_atozu(av[1]);
 	data->time_to_die = ft_atozu(av[2]);
@@ -38,7 +38,7 @@ int	init_shared_struct(int ac, char **av, t_shared *data)
 	if (ac == 6)
 		data->min_meals = ft_atozu(av[5]);
 	data->start_time = get_curr_time();
-	if (FASAK)
+	if (DEBUG_SWITCH)
 		printf(OUTPUT "-----\t Ended init_shared_struct \t-----\n\n");
 	return (1);
 }
@@ -49,14 +49,14 @@ int	init_shared_struct(int ac, char **av, t_shared *data)
  * @return int
  * 
  * @details Init mutexes for dead, done and print
- * Note: FASAK is used for debugging
+ * Note: DEBUG_SWITCH is used for debugging
  * Note: if mutex init fails, destroy previous mutexes and return 0
  * 
 */
 
 int	init_mutex(t_mutex *data)
 {
-	if (FASAK)
+	if (DEBUG_SWITCH)
 		printf(OUTPUT "-----\t started init_mutex \t-----\n");
 	if (pthread_mutex_init(&data->lock_dead, NULL) != 0)
 		return (printf(ERROR "pthread_mutex_init for lock_dead failed.\n"), 0);
@@ -67,7 +67,7 @@ int	init_mutex(t_mutex *data)
 		return (pthread_mutex_destroy(&data->lock_dead),
 			pthread_mutex_destroy(&data->lock_done),
 			printf(ERROR "pthread_mutex_init for lock_print failed.\n"), 0);
-	if (FASAK)
+	if (DEBUG_SWITCH)
 		printf(OUTPUT "-----\t Ended init_mutex \t-----\n\n");
 	return (1);
 }
@@ -94,7 +94,7 @@ int	init_philo(t_philo **philos, t_shared *shared, t_mutex *mutexes)
 {
 	int		id;
 
-	if (FASAK)
+	if (DEBUG_SWITCH)
 		printf(OUTPUT "-----\t started init_philo \t-----\n");
 	*philos = malloc(sizeof(t_philo) * shared->philo_count);
 	if (!*philos)
@@ -115,7 +115,7 @@ int	init_philo(t_philo **philos, t_shared *shared, t_mutex *mutexes)
 	}
 	if (shared->philo_count > 1)
 		(*philos)[0].l_fork = &(*philos)[shared->philo_count - 1].r_fork;
-	if (FASAK)
+	if (DEBUG_SWITCH)
 		printf(OUTPUT "-----\t Ended init_philo \t-----\n\n");
 	return (0);
 }
@@ -139,7 +139,7 @@ int	start_threads(t_philo *philos)
 			return (printf(ERROR "ERROR! pthread_create failed\n"), 0);
 		id++;
 	}
-	if (FASAK)
+	if (DEBUG_SWITCH)
 		printf(OUTPUT "-----\t Created all threads -----\n\n-----\t \
 		Joining threads -----\n" RESET);
 	id = -1;

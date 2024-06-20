@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:41:25 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/19 20:55:22 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/20 01:40:45 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,10 @@ int	error_in_arg(int ac, char **av)
 	// 		return an error msg and return true for error in args
 	if (ft_atozu(av[1]) < 1 || ft_atozu(av[1]) > 200)
 		return (printf(ERROR "Error! Invalid philosopher count!\n" RESET), 1);
+
+	// checck if the times are less than 60 ms (milli seconds)
+	//		return respective error msg and return true for error in args
+	
 	if (ft_atozu(av[2]) < 60)
 		return (printf(ERROR "Error! Invalid time to die!\n" RESET), 1);
 	if (ft_atozu(av[3]) < 60)
@@ -90,10 +94,13 @@ int	syntax_error(int ac, char **av)
 	char		**temp;
 
 	// If there are less or more than the valid num of arguments
-		// 	return an error indicating the same and 1
+		// 	return an error indicating the same and return 1
 	if (ac != 5 && ac != 6)
 		return (printf(ERROR "ERROR! Provide 5 or 6 arguments.\n" RESET), 1);
+	// store the arguments in a temp variable to iterate over them
 	temp = av;
+	// Loop through args using temp and check if they are numeric and within the handled size_t range
+	//  	if not, return appropriate error msg and return 1
 	while (*++temp)
 	{
 		arg = *temp;
@@ -105,13 +112,19 @@ int	syntax_error(int ac, char **av)
 				return (printf(ERROR "ERROR! Numeric args needed.\n" RESET), 1);
 			arg++;
 		}
+		// convert the string to a size_t number
+		// we set the when we encounter any type of error within the ft_atozu function
+		// Though not ideal, it is the most sensible as size_max is unsigned and
+		// and size_max is larget value in size_t and is actually very large by itself
+		// this could be set to 0 as we are not using 0 as a valid value anyways too
 		num = ft_atozu(*temp);
-		if (num == 0 || num == SIZE_MAX)
+		if (num == SIZE_MAX)
 			return (printf(ERROR "ERROR! Argument overflow.\n" RESET), 1);
 	}
+	// Checks if the arguments are within the handled range
 	if (error_in_arg(ac, av))
 		return (1);
-	if (FASAK)
+	if (DEBUG_SWITCH)
 		printf(OUTPUT "\n-----\t No syntax errors found -----\n\n" RESET);
 	return (0);
 }

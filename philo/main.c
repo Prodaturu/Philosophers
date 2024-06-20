@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 23:09:10 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/19 22:48:50 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/19 23:25:29 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ int	main(int ac, char **av)
 	t_mutex		mutexes;
 	t_philo		*philos;
 
-	if (FASAK)
-		printf(OUTPUT "-----\t started philo program \t-----\n\n");
+	if (DEBUG_SWITCH)
+		printf(OUTPUT "-----\t started philo program \t-----\n\n" RESET);
 	if (syntax_error(ac, av))
 		return (1);
 	if (!init_shared_struct(ac, av, &shared))
@@ -50,8 +50,8 @@ int	main(int ac, char **av)
 	if (init_philo(&philos, &shared, &mutexes))
 		return (1);
 	if (!start_threads(philos))
-		return (printf(ERROR "start_threads failed\n"), 1);
-	if (FASAK)
+		return (printf(ERROR "start_threads failed\n" RESET), 1);
+	if (DEBUG_SWITCH)
 		printf(OUTPUT "\n-----\t Ended philo program \t-----\n\n");
 	return (0);
 }
