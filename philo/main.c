@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 23:09:10 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/19 23:25:29 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/20 08:04:38 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	main(int ac, char **av)
 		return (1);
 	if (init_philo(&philos, &shared, &mutexes))
 		return (1);
+	// start and join threads for each philosopher
 	if (!start_threads(philos))
 		return (printf(ERROR "start_threads failed\n" RESET), 1);
 	if (DEBUG_SWITCH)
@@ -65,13 +66,7 @@ int	main(int ac, char **av)
 // It returns an integer value.
 // As we are supposed to have a thread for each philosopher,
 // we need to create a thread for each philosopher.
-// The main function call the follwoing functions in order:	
-// 1. syntax_error - to check if the arguments are valid
-// 2. init_shared_struct - to initialize the shared info struct
-// 3. init_mutex - to initialize the mutexes
-// 4. init_philo - to initialize the philos specific info struct
-// 5. start_threads - to start and join the threads
-// If any of the above functions return 1, it means there was an error
+// If any of the functions return 1, it means there was an error
 // and the main function returns 1.
 // If all the functions return 0, it means the program ran successfully
 // and the main function returns 0.

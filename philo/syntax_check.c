@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:41:25 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/20 04:30:00 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/20 15:03:42 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int	syntax_error(int ac, char **av)
 	if (error_in_arg(ac, av))
 		return (1);
 	if (DEBUG_SWITCH)
-		printf(OUTPUT "\n-----\t No syntax errors found ----- \n\n" RESET);
+		printf(OUTPUT "\n-----\t No syntax errors found ----- \n\n" RESET);   
 	return (0);
 }
 
@@ -142,6 +142,4 @@ int	syntax_error(int ac, char **av)
 // we need to chose a data type that can hold the values of the arguments.
 // We have chosen size_t as the datatype for mainly 2 reasons:
 // 1. size_t can hold large values, which is needed for the time values
-// 2. As it only stores positive values, we are not wasting memory 
-//	   storing negative values, which we don't need in this case.
-// implemenation: explained in the function
+// 2. It only stores positive values, saving memory.

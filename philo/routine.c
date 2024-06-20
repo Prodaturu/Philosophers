@@ -6,23 +6,36 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 20:50:08 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/19 23:22:24 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/20 17:26:14 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	philo_initial_setup(t_philo *philo)
+// as each philo needs two forks to eat
+// half of them will have to wait for the right fork
+// so we make them think first
+
+void philo_initial_setup(t_philo *philo)
 {
+	if (DEBUG_SWITCH)
+		printf(OUTPUT "-----\t start: every alternate philo to think \t-----\n");
 	if (philo->id % 2 == 0 || philo->id == philo->shared->philo_count)
 	{
 		print_action(philo, "is thinking");
 		ft_usleep(philo->shared->time_to_eat);
 	}
+	if (DEBUG_SWITCH)
+		printf(OUTPUT "-----\t Done: every alternate philo is thinking  \t-----\n\n");
 }
+
+// Explanation for philo_eating_phase
+// 
 
 void	philo_eating_phase(t_philo *philo)
 {
+	if (DEBUG_SWITCH && DEBUG_ALL_SWITCH)
+		printf(EAT "-----\t start: eating phase of each philo \t-----\n" RESET);
 	pthread_mutex_lock(&philo->r_fork);
 	print_action(philo, "has taken a fork");
 	if (philo->shared->philo_count > 1)
@@ -40,6 +53,8 @@ void	philo_eating_phase(t_philo *philo)
 		pthread_mutex_unlock(philo->l_fork);
 	}
 	pthread_mutex_unlock(&philo->r_fork);
+	if (DEBUG_SWITCH && DEBUG_ALL_SWITCH)
+		printf(EAT "-----\t Done: eating phase of each philo \t-----\n\n" RESET);
 }
 
 void	philo_sleeping_thinking_phase(t_philo *philo)
@@ -53,6 +68,8 @@ void	philo_sleeping_thinking_phase(t_philo *philo)
 
 void	*philo_main_routine(t_philo *philo)
 {
+	if (DEBUG_SWITCH)
+		printf(OUTPUT "-----\t start: The actual routine of each and every philo \t-----\n");
 	while (!philo->shared->is_dead)
 	{
 		if (philo->shared->is_dead || philo->shared->is_full)
@@ -64,6 +81,8 @@ void	*philo_main_routine(t_philo *philo)
 		if (philo->shared->is_dead || philo->shared->is_full)
 			return (NULL);
 	}
+	if (DEBUG_SWITCH)
+		printf(OUTPUT "-----\t Done: The actual routine of each and every philo \t-----\n\n");
 	return (NULL);
 }
 

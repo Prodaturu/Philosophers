@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 11:24:29 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/20 00:07:30 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/20 17:31:22 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,25 +28,18 @@
 // DEBUG_SWITCH -> 0 => normal mode
 // # define DEBUG_SWITCH 1
 
-# define DEBUG_SWITCH 1
+# define DEBUG_SWITCH 0
+# define DEBUG_ALL_SWITCH 0
 
 # define ERROR "\033[0;31m"		// Red
 # define DEBUG "\033[0;34m"		// Blue
 # define OUTPUT "\033[0;32m"	// Green
-// # define EAT "\033[38;2;36;113;163m"   // #2471A3
-// # define FORK "\033[38;2;169;50;38m"   // #A93226
-// # define SLEEP "\033[38;2;112;123;124m" // #707B7C
-// # define THINK "\033[38;2;211;84;0m"   // #D35400
+
 # define FORK "\033[38;2;52;152;219m"    // #3498DB
-// # define FORK "\033[38;2;231;76;60m"    // #E74C3C
-// # define SLEEP "\033[38;2;149;165;166m" // #95A5A6
-// # define THINK "\033[38;2;241;196;15m"  // #F1C40F
-// # define EAT "\033[38;2;231;76;60m"   // #E74C3C
 # define EAT "\033[0;32m"
 # define SLEEP "\033[38;2;189;195;199m"// #BDC3C7
 # define THINK "\033[38;2;241;196;15m" // #F1C40F
 # define RESET "\033[0m"		// Reset color
-
 
 typedef enum e_state
 {
@@ -56,7 +49,6 @@ typedef enum e_state
 	THINKING,
 	DEAD_AF
 }			t_state;
-// JaggyJazz123@
 
 // Data common to all philosophers
 

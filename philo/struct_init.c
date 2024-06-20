@@ -6,7 +6,7 @@
 /*   By: sprodatu <sprodatu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:43:23 by sprodatu          #+#    #+#             */
-/*   Updated: 2024/06/19 23:23:06 by sprodatu         ###   ########.fr       */
+/*   Updated: 2024/06/20 15:12:31 by sprodatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,16 @@ int	init_shared_struct(int ac, char **av, t_shared *data)
 {
 	if (DEBUG_SWITCH)
 		printf(OUTPUT "----- \t started init_shared_struct \t-----\n");
+
+	// assign given input values common to philos to shared struct
 	data->philo_count = ft_atozu(av[1]);
 	data->time_to_die = ft_atozu(av[2]);
 	data->time_to_eat = ft_atozu(av[3]);
 	data->time_to_sleep = ft_atozu(av[4]);
 	data->min_meals = -1;
+
+	// assign a variable to track if a philo is dead
+	// as all philos die at the same time, we can use a single variable
 	data->is_dead = 0;
 	if (ac == 6)
 		data->min_meals = ft_atozu(av[5]);
@@ -113,6 +118,7 @@ int	init_philo(t_philo **philos, t_shared *shared, t_mutex *mutexes)
 		if (id > 0)
 			(*philos)[id].l_fork = &(*philos)[id - 1].r_fork;
 	}
+	
 	if (shared->philo_count > 1)
 		(*philos)[0].l_fork = &(*philos)[shared->philo_count - 1].r_fork;
 	if (DEBUG_SWITCH)
